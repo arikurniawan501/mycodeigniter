@@ -17,7 +17,7 @@ class Menu extends CI_Controller
     {
         $data['title'] = 'Menu Management';
         $data['menu'] = $this->menu->get_all();
-        var_dump($data['menu'][0]);
+        // var_dump($data['menu'][0]);
         $this->load->view('menu/v_menu', $data);
     }
 
