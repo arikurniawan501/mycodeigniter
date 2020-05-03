@@ -1,5 +1,4 @@
  <!-- Main Sidebar Container -->
-
  <!-- <aside class="main-sidebar sidebar-light-info elevation-4">
      <a href="index3.html" class="brand-link navbar-info">
          <img src="<?= base_url('assets/') ?>dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3 " style="opacity: .8">
@@ -149,7 +148,8 @@
                                 <ul class="nav nav-treeview">
                                     <?php 
                                         foreach (submenu($this->session->userdata('role_id')) as $key => $submenu) { 
-                                            if($submenu->id == $menu->submenu_id){
+                                            if($menu->menu_id == $submenu->menu_id){
+                                                
                                     ?>
 
                                     <li class="nav-item">
@@ -178,3 +178,4 @@
      </div>
      <!-- /.sidebar -->
  </aside>
+

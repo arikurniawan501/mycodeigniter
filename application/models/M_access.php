@@ -133,7 +133,7 @@ class M_access extends CI_Model
 
 	function submenu_by_role($role)
 	{
-		$this->db->select('*');
+		$this->db->select('tb_user_access_menu.*, tb_user_sub_menu.title, tb_user_sub_menu.url, tb_user_sub_menu.icon');
 		$this->db->from($this->table);
 		$this->db->join('tb_user_sub_menu', 'tb_user_access_menu.submenu_id = tb_user_sub_menu.id');
 		$this->db->where('role_id', $role);
