@@ -35,7 +35,9 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Nama Menu</th>
-                                        <th>icon</th>
+                                        <th>Icon</th>
+                                        <th>Url</th>
+                                        <th>No Urut</th>
                                         <th style="text-align: center;">Action</th>
                                     </tr>
                                 </thead>
@@ -134,6 +136,10 @@
 
                 $('[name="id"]').val(data.id);
                 $('[name="menu"]').val(data.menu);
+                $('[name="icon"]').val(data.icon);
+                $('[name="url"]').val(data.url);
+                $('[name="urutan"]').val(data.no_urut);
+
                 $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
                 $('.modal-title').text('Edit Menu'); // Set title to Bootstrap modal title
             },
@@ -259,11 +265,19 @@
                     <div class="form-body">
                         <div class="form-group">
                             <label class="control-label col-md-3">Nama Menu</label>
-                            <input name="menu" placeholder="Nama Menu" class="form-control" type="text">
+                            <input name="menu" placeholder="Nama Menu" class="form-control" type="text" required>
+                            <span class="help-block"></span>
+
                             <label class="control-label col-md-3">Icon</label>
-                            <input name="icon" placeholder="Icon" class="form-control" type="text">
+                            <input name="icon" placeholder="Icon" class="form-control" type="text" required>
+                            <span class="help-block"></span>
+
                             <label class="control-label col-md-3">Url</label>
-                            <input name="url" placeholder="Url" class="form-control" type="text">
+                            <input name="url" placeholder="Url" class="form-control" type="text" required>
+                            <span class="help-block"></span>
+
+                            <label class="control-label col-md-3">No Urut</label>
+                            <input name="urutan" placeholder="No Urut" class="form-control" type="number" min="1" required>
                             <span class="help-block"></span>
                         </div>
                     </div>

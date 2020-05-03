@@ -1,11 +1,12 @@
  <!-- Main Sidebar Container -->
- <aside class="main-sidebar sidebar-light-info elevation-4">
+
+ <!-- <aside class="main-sidebar sidebar-light-info elevation-4">
      <a href="index3.html" class="brand-link navbar-info">
          <img src="<?= base_url('assets/') ?>dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3 " style="opacity: .8">
          <span class="brand-text font-weight-light text-white">SURATKU</span>
      </a>
 
-     <!-- Sidebar -->
+     Sidebar
      <div class="sidebar">
          <div class="user-panel mt-3 pb-3 mb-3 d-flex">
              <div class="image">
@@ -16,7 +17,7 @@
              </div>
          </div>
 
-         <!-- Sidebar Menu -->
+         Sidebar Menu
          <nav class="mt-2">
              <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
@@ -103,6 +104,74 @@
                          <p> LOGOUT</p>
                      </a>
                  </li>
+             </ul>
+         </nav>
+         /.sidebar-menu
+     </div>
+     /.sidebar
+ </aside> -->
+
+  <aside class="main-sidebar sidebar-light-info elevation-4">
+     <a href="index3.html" class="brand-link navbar-info">
+         <img src="<?= base_url('assets/') ?>dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3 " style="opacity: .8">
+         <span class="brand-text font-weight-light text-white">SURATKU</span>
+     </a>
+
+     <!-- Sidebar -->
+     <div class="sidebar">
+         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+             <div class="image">
+                 <img src="<?= base_url('assets/') ?>dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+             </div>
+             <div class="info">
+                 <a href="#" class="d-block"><?= $this->session->userdata('username') ?></a>
+             </div>
+         </div>
+
+         <!-- Sidebar Menu -->
+         <nav class="mt-2">
+             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                 <?php 
+                    $listUrlSubMenu = [];
+                    foreach (menu($this->session->userdata('role_id')) as $key => $menu) {
+                        foreach (submenu($this->session->userdata('role_id')) as $key => $submenu) { 
+                            $listUrlSubMenu[$key] = base_url($submenu->url);
+                        }
+
+                        if($menu->submenu_id <> ''){
+                 ?>                 
+                            <li class="nav-item has-treeview <?= in_array(base_url(uri_string()), $listUrlSubMenu) ? 'menu-open' : null ?>">
+                                <a href="<?= base_url($menu->url) ?>" class="nav-link">
+                                    <i class="<?= $menu->icon ?>"></i>
+                                    <p><?= $menu->menu ?><i class="right fas fa-angle-left"></i></p>
+                                </a>
+
+                                <ul class="nav nav-treeview">
+                                    <?php 
+                                        foreach (submenu($this->session->userdata('role_id')) as $key => $submenu) { 
+                                            if($submenu->id == $menu->submenu_id){
+                                    ?>
+
+                                    <li class="nav-item">
+                                        <a href="<?= base_url($submenu->url) ?>" class="nav-link <?= base_url(uri_string()) == base_url($submenu->url) ? "active" : null ?>">
+                                            <i class="<?= $submenu->icon ?>"></i>
+                                            <p><?= $submenu->title ?></p>
+                                        </a>
+                                    </li>                                    
+                                        
+                                    <?php } } ?>
+                                </ul>                                
+                            </li>                            
+                        <?php }else{ ?>
+                            <li class="nav-item">
+                                <a href="<?= base_url($menu->url) ?>" class="nav-link">
+                                    <i class="<?= $menu->icon ?>"></i>
+                                    <p><?= $menu->menu ?></p>
+                                </a>
+                            </li>
+                        <?php } ?>
+
+                 <?php } ?>
              </ul>
          </nav>
          <!-- /.sidebar-menu -->

@@ -36,3 +36,29 @@ function check_access($role_id, $menu_id)
         return "checked='checked'";
     }
 }
+
+function menu($role = false)
+{
+    if($role === FALSE){
+        return [];
+    }
+    
+    $ci = get_instance();
+
+    $ci->load->model('M_access', 'access');
+
+    return $ci->access->menu_by_role($role);
+}
+
+function submenu($role = false)
+{
+    if($role === FALSE){
+        return [];
+    }
+    
+    $ci = get_instance();
+
+    $ci->load->model('M_access', 'access');
+
+    return $ci->access->submenu_by_role($role);
+}

@@ -41,6 +41,7 @@ class Submenu extends CI_Controller
             $row[] =  $mysubmenu->menu;
             $row[] =  $mysubmenu->url;
             $row[] =  $mysubmenu->icon;
+            $row[] =  $mysubmenu->no_urut;
 
             //add html for action
             $row[] = '<center><a class="btn btn-sm btn-secondary" href="javascript:void(0)" title="Edit" onclick="edit(' . "'" . $mysubmenu->id . "'" . ')"><i class="fa fa-edit"></i></a>
@@ -69,7 +70,8 @@ class Submenu extends CI_Controller
             'title' => $this->input->post('menu'),
             'menu_id' => $this->input->post('parent'),
             'icon' => $this->input->post('icon'),
-            'url' => $this->input->post('url'),            
+            'url' => $this->input->post('url'),    
+            'no_urut'=> $this->input->post('urutan'),        
         );
 
         $this->submenu->update(array('id' => $this->input->post('id')), $data);
@@ -83,6 +85,7 @@ class Submenu extends CI_Controller
             'menu_id' => $this->input->post('parent'),
             'icon' => $this->input->post('icon'),
             'url' => $this->input->post('url'),
+            'no_urut'=> $this->input->post('urutan'),
         );
         $insert = $this->submenu->save($data);
 

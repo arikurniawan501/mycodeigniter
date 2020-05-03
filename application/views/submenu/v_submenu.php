@@ -37,6 +37,7 @@
                                         <th>Parent Menu</th>
                                         <th>Url</th>
                                         <th>Icon</th>
+                                        <th>No Urut</th>
                                         <!-- <th>Active</th> -->
                                         <th style="text-align: center;">Action</th>
                                     </tr>
@@ -95,7 +96,7 @@
         $('.help-block').empty(); // clear error string
         $('#submenu').modal('show'); // show bootstrap modal
         $('#photo-preview').hide(); // hide photo preview modal
-        $('.modal-title').text('Tambah Menu'); // Set title to Bootstrap modal title
+        $('.modal-title').text('Tambah Sub Menu'); // Set title to Bootstrap modal title
 
     }
 
@@ -118,6 +119,8 @@
                 $('[name="menu"]').val(data.title);
                 $('[name="url"]').val(data.url);
                 $('[name="icon"]').val(data.icon);
+                $('[name="urutan"]').val(data.no_urut);
+                
                 $('select[name="parent"]').val(data.menu_id).change();
                 $('#submenu').modal('show'); // show bootstrap modal when complete loaded
                 $('.modal-title').text('Edit Sub Menu'); // Set title to Bootstrap modal title
@@ -240,21 +243,34 @@
             <div class="modal-body form">
                 <form id="form" class="form-horizontal">
                     <div class="form-group">
+                        <label class="control-label col-md-3">Sub Menu</label>
                         <input type="text" class="form-control" id="title" name="menu" placeholder="Submenu title">
+                        <span class="help-block"></span>
                     </div>
                     <div class="form-group">
+                        <label class="control-label col-md-3">Parent Menu</label>
                         <select name="parent" id="menu_id" class="form-control">
-                            <option value="">Select Menu</option>
+                            <option value="">Pilih Menu</option>
                             <?php foreach ($menu as $m) : ?>
                                 <option value="<?= $m->id; ?>"><?= $m->menu; ?></option>
                             <?php endforeach; ?>
                         </select>
+                        <span class="help-block"></span>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="url" name="url" placeholder="Submenu url">
+                        <label class="control-label col-md-3">Url</label>
+                        <input type="text" class="form-control" id="url" name="url" placeholder="Url">
+                        <span class="help-block"></span>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="icon" name="icon" placeholder="Submenu icon">
+                        <label class="control-label col-md-3">Icon</label>
+                        <input type="text" class="form-control" id="icon" name="icon" placeholder="Icon">
+                        <span class="help-block"></span>
+                    </div>
+                    <div class="form-group">
+                            <label class="control-label col-md-3">No Urut</label>
+                            <input name="urutan" placeholder="No Urut" class="form-control" type="number" min="1" required>
+                            <span class="help-block"></span>
                     </div>
                     <!-- <div class="form-group">
                         <div class="form-check">

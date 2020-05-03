@@ -117,4 +117,29 @@ class M_access extends CI_Model
         $this->db->where('id', $id);
         $this->db->delete($this->table);
     }
+
+	function menu_by_role($role)
+	{
+		$this->db->select('tb_user_access_menu.*, tb_user_menu.menu, tb_user_menu.url, tb_user_menu.icon, tb_user_menu.no_urut');
+		$this->db->from($this->table);
+		$this->db->join('tb_user_menu', 'tb_user_access_menu.menu_id = tb_user_menu.id');
+		$this->db->where('role_id', $role);
+		$this->db->group_by('menu_id');
+		$this->db->order_by('tb_user_menu.no_urut');
+
+		$query = $this->db->get();
+		return $query->result();
+	}
+
+	function submenu_by_role($role)
+	{
+		$this->db->select('*');
+		$this->db->from($this->table);
+		$this->db->join('tb_user_sub_menu', 'tb_user_access_menu.submenu_id = tb_user_sub_menu.id');
+		$this->db->where('role_id', $role);
+		$this->db->order_by('tb_user_sub_menu.no_urut');
+
+		$query = $this->db->get();
+		return $query->result();
+	}
 }

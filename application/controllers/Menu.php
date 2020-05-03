@@ -36,6 +36,8 @@ class Menu extends CI_Controller
             $row[] = $no;
             $row[] =  $mymenu->menu;
             $row[] =  $mymenu->icon;
+            $row[] =  $mymenu->url;
+            $row[] =  $mymenu->no_urut;
 
             //add html for action
             $row[] = '<center><a class="btn btn-sm btn-secondary" href="javascript:void(0)" title="Edit" onclick="edit_person(' . "'" . $mymenu->id . "'" . ')"><i class="fa fa-edit"></i></a>
@@ -62,6 +64,9 @@ class Menu extends CI_Controller
     {
         $data = array(
             'menu' => $this->input->post('menu'),
+            'icon' => $this->input->post('icon'),
+            'url' => $this->input->post('url'),
+            'no_urut'=> $this->input->post('urutan'),
         );
 
         $this->menu->update(array('id' => $this->input->post('id')), $data);
@@ -74,6 +79,7 @@ class Menu extends CI_Controller
             'menu' => $this->input->post('menu'),
             'icon' => $this->input->post('icon'),
             'url' => $this->input->post('url'),
+            'no_urut'=> $this->input->post('urutan'),
             'isParent' => 1,
         );
         $insert = $this->menu->save($data);
