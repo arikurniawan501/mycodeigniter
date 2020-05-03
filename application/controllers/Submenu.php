@@ -95,4 +95,20 @@ class Submenu extends CI_Controller
         $this->submenu->delete_by_id($id);
         echo json_encode(array("status" => TRUE));
     }
+
+    public function by_menu()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $menu = $this->input->post('menu', true);
+            $get = $this->submenu->get_where('where menu_id = '.$menu);
+            $data = [];
+
+			foreach ($get as $key => $value) {
+                $data[$key] = array('id' => $value->id, 'text' => $value->title);
+			}
+
+			echo json_encode($data);
+		}
+
+    }
 }

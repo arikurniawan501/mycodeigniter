@@ -1,41 +1,36 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class M_submenu extends CI_Model
+class M_access extends CI_Model
 {
-
-
-    public $table = 'tb_user_sub_menu';
-    var $column_order = array('title', null); //set column field database for datatable orderable
-    var $column_search = array('title'); //set column field database for datatable searchable just firstname , lastname , address are searchable
-    var $order = array('id' => 'desc'); // default order 
+    public $table = 'tb_user_access_menu';
+    var $column_order = array('role', null, 'menu', 'title'); //set column field database for datatable orderable
+    var $column_search = array('role', 'menu', 'title'); //set column field database for datatable searchable just firstname , lastname , address are searchable
+    var $order = array('role' => 'asc'); // default order 
 
     public function __construct()
     {
         parent::__construct();
         $this->load->database();
     }
-    // public function getSubMenu()
-    // {
-    //     $query = "SELECT `tb_user_sub_menu`.*, `tb_user_menu`.`menu`
-    //               FROM `tb_user_sub_menu` JOIN `tb_user_menu`
-    //               ON `tb_user_sub_menu`.`menu_id` = `tb_user_menu`.`id`
-    //             ";
-    //     return $this->db->query($query)->result_array();
-    // }
 
     function get_all()
     {
-        $this->db->select('tb_user_sub_menu.*, tb_user_menu.menu');
         $this->db->from($this->table);
-        $this->db->join('tb_user_menu', 'tb_user_menu.id = tb_user_sub_menu.menu_id');
+        $this->db->join('tb_user_role', 'tb_user_access_menu.role_id = tb_user_role.id');
+        $this->db->join('tb_user_menu', 'tb_user_access_menu.menu_id = tb_user_menu.id');
+        $this->db->join('tb_user_sub_menu', 'tb_user_access_menu.submenu_id = tb_user_sub_menu.id', 'left');
 
-        return $this->db->get()->result();
+        return $this->db->get();
     }
     private function _get_datatables_query()
     {
+
+        $this->db->select('tb_user_access_menu.*, tb_user_role.role, tb_user_menu.menu, tb_user_sub_menu.title');
         $this->db->from($this->table);
-        
+        $this->db->join('tb_user_role', 'tb_user_access_menu.role_id = tb_user_role.id');
+        $this->db->join('tb_user_menu', 'tb_user_access_menu.menu_id = tb_user_menu.id');
+        $this->db->join('tb_user_sub_menu', 'tb_user_access_menu.submenu_id = tb_user_sub_menu.id', 'left');
 
         $i = 0;
 
@@ -70,9 +65,8 @@ class M_submenu extends CI_Model
     {
         $this->_get_datatables_query();
         if ($_POST['length'] != -1)
-        $this->db->limit($_POST['length'], $_POST['start']);
-        $this->db->select('tb_user_sub_menu.*, tb_user_menu.menu');
-        $this->db->join('tb_user_menu', 'tb_user_menu.id = tb_user_sub_menu.menu_id');
+            $this->db->limit($_POST['length'], $_POST['start']);
+
         $query = $this->db->get();
         return $query->result();
     }
@@ -85,7 +79,7 @@ class M_submenu extends CI_Model
     }
     function get_where($where)
     {
-        return $this->db->query('select * from tb_user_sub_menu ' . $where)->result();
+        return $this->db->query('select * from tb_user_access_menu ' . $where)->result();
     }
 
     public function count_all()
@@ -95,8 +89,12 @@ class M_submenu extends CI_Model
     }
     public function get_by_id($id)
     {
+        $this->db->select('tb_user_access_menu.*');
         $this->db->from($this->table);
-        $this->db->where('id', $id);
+        $this->db->join('tb_user_role', 'tb_user_access_menu.role_id = tb_user_role.id');
+        $this->db->join('tb_user_menu', 'tb_user_access_menu.menu_id = tb_user_menu.id');
+        $this->db->join('tb_user_sub_menu', 'tb_user_access_menu.submenu_id = tb_user_sub_menu.id', 'left');
+        $this->db->where('tb_user_access_menu.id', $id);
         $query = $this->db->get();
 
         return $query->row();

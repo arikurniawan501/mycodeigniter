@@ -1,41 +1,29 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class M_submenu extends CI_Model
+class M_role extends CI_Model
 {
 
 
-    public $table = 'tb_user_sub_menu';
-    var $column_order = array('title', null); //set column field database for datatable orderable
-    var $column_search = array('title'); //set column field database for datatable searchable just firstname , lastname , address are searchable
-    var $order = array('id' => 'desc'); // default order 
+    public $table = 'tb_user_role';
+    var $column_order = array('role', null); //set column field database for datatable orderable
+    var $column_search = array('role'); //set column field database for datatable searchable just firstname , lastname , address are searchable
+    var $order = array('id' => 'asc'); // default order 
 
     public function __construct()
     {
         parent::__construct();
         $this->load->database();
     }
-    // public function getSubMenu()
-    // {
-    //     $query = "SELECT `tb_user_sub_menu`.*, `tb_user_menu`.`menu`
-    //               FROM `tb_user_sub_menu` JOIN `tb_user_menu`
-    //               ON `tb_user_sub_menu`.`menu_id` = `tb_user_menu`.`id`
-    //             ";
-    //     return $this->db->query($query)->result_array();
-    // }
 
     function get_all()
     {
-        $this->db->select('tb_user_sub_menu.*, tb_user_menu.menu');
-        $this->db->from($this->table);
-        $this->db->join('tb_user_menu', 'tb_user_menu.id = tb_user_sub_menu.menu_id');
-
-        return $this->db->get()->result();
+        return $this->db->get($this->table)->result();
     }
     private function _get_datatables_query()
     {
+
         $this->db->from($this->table);
-        
 
         $i = 0;
 
@@ -70,9 +58,7 @@ class M_submenu extends CI_Model
     {
         $this->_get_datatables_query();
         if ($_POST['length'] != -1)
-        $this->db->limit($_POST['length'], $_POST['start']);
-        $this->db->select('tb_user_sub_menu.*, tb_user_menu.menu');
-        $this->db->join('tb_user_menu', 'tb_user_menu.id = tb_user_sub_menu.menu_id');
+            $this->db->limit($_POST['length'], $_POST['start']);
         $query = $this->db->get();
         return $query->result();
     }
@@ -85,7 +71,7 @@ class M_submenu extends CI_Model
     }
     function get_where($where)
     {
-        return $this->db->query('select * from tb_user_sub_menu ' . $where)->result();
+        return $this->db->query('select * from tb_user_role ' . $where)->result();
     }
 
     public function count_all()
@@ -104,6 +90,7 @@ class M_submenu extends CI_Model
 
     public function save($data)
     {
+
         $this->db->insert($this->table, $data);
         return $this->db->insert_id();
     }

@@ -24,6 +24,10 @@
     <link rel="stylesheet" href="<?= base_url() ?>assets/plugins/summernote/summernote-bs4.css">
     <link rel="stylesheet" href="<?= base_url() ?>assets/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <script>
+        const site_url = '<?= base_url() ?>';
+    </script>
 </head>
 <!--
 BODY TAG OPTIONS:
